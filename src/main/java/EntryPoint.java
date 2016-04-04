@@ -1,10 +1,10 @@
 import java.io.IOException;
-import java.net.UnknownHostException;
+import org.htmlparser.util.ParserException;
 
 public class EntryPoint {
 	
-	public static void main(String args[]) throws UnknownHostException, IOException{
-		String s = new String(HTTPClient.getHTMLContent("http://www.cse.ust.hk/"));
-		System.out.println(s);
+	public static void main(String args[]) throws IOException, ParserException{
+//		new Spider("http://www.cse.ust.hk/");
+		new Spider("http://ihome.ust.hk/~hlchanad");
 	}
 }
