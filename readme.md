@@ -10,6 +10,7 @@
   
 # add jar
 > (jdbm are not on maven repo)
+
   1. open project properties
   2. Java Build Path > Libraries > Add JARs...
   3. select COMP4321/lib/jdbm-1.0.jar
