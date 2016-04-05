@@ -1,3 +1,6 @@
+import html.HTTPClient;
+import html.LinkExtractor;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -8,12 +11,18 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import model.Page;
+
 import org.htmlparser.util.ParserException;
+
+import data.SpiderDAO;
+import data.JDBMSpiderDAO;
 
 
 public class Spider {
 	
 	String url;
+	SpiderDAO dao = new JDBMSpiderDAO();
 	
 	public Spider(String rootURL) throws IOException, ParserException{
 		url = rootURL;
@@ -33,12 +42,10 @@ public class Spider {
 			Vector<String> children = (new LinkExtractor(url)).extractLinks();
 			String htmlContent = HTTPClient.getHTMLContent(url);
 			Timestamp lastMod = HTTPClient.getLastMod(url);
-//			if (!parents.containsKey(url)) parents.put(url, new Vector<String>());
+			String title = HTTPClient.getTitle(url);
 			
-			
-			Node n = new Node(url, new Vector<String>(), children, lastMod, htmlContent);
-			// store db
-			System.out.println(n);
+			Page n = new Page(url, title, new Vector<String>(), children, lastMod, htmlContent);
+			dao.add(n);
 			
 			for (String child: children){
 				if (!parents.containsKey(child)) parents.put(child, new Vector<String>());
@@ -56,15 +63,20 @@ public class Spider {
 			count ++;
 		}
 		
-		// for loop get all from db then put parents link
-		for (String key : parents.keySet()){
-			System.out.println("\"" + key + "\": [");
-			for (int i=0; i<parents.get(key).size(); i++){
-				System.out.print("\t\"" + parents.get(key).get(i) + "\"");
-				if (i < parents.get(key).size()-1) System.out.println(",");
-			}
-			System.out.println("\n]");
-			
-		}
+		System.out.println("objects in db :");
+		System.out.println(dao.toString());
+		
+		dao.close();
+		
+//		// for loop get all from db then put parents link
+//		for (String key : parents.keySet()){
+//			System.out.println("\"" + key + "\": [");
+//			for (int i=0; i<parents.get(key).size(); i++){
+//				System.out.print("\t\"" + parents.get(key).get(i) + "\"");
+//				if (i < parents.get(key).size()-1) System.out.println(",");
+//			}
+//			System.out.println("\n]");
+//			
+//		}
 	}
 }

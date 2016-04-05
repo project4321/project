@@ -1,3 +1,4 @@
+package html;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -29,6 +30,11 @@ public class HTTPClient {
 	    long date = httpCon.getLastModified();
 	    if (date == 0) return null; // No last-modified information
 	    else return new Timestamp(date);
+	}
+
+	public static String getTitle(String url) {
+		
+		return "no title yet";
 	}
 	
 }

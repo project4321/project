@@ -104,7 +104,7 @@ public class FruitBasket
         iter = hashtable.keys();
         fruit = (String) iter.next();
         while ( fruit != null ) {
-            System.out.print( " " + fruit );
+            System.out.print( "(" + fruit + ", " + hashtable.get(fruit) + ") ");
             fruit = (String) iter.next();
         }
         System.out.println();
