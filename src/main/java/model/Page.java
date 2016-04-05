@@ -40,8 +40,8 @@ public class Page implements Serializable {
 	public String toString(){
 		return "{\n"
 				+ "\tid: " + id + ", \n"
-				+ "\turl: " + url + ", \n"
 				+ "\ttitle: " + title + ", \n"
+				+ "\turl: " + url + ", \n"
 				+ "\tparentLinks:" + parentLinks.toString() + ", \n"
 				+ "\tchildLinks: " + childLinks.toString() + ", \n"
 				+ "\tlastMod: " + lastMod + "\n"
@@ -49,5 +49,11 @@ public class Page implements Serializable {
 				+ "}";
 	}
 	
+	public int getId() { return this.id; }
 	public String getURL() { return this.url; }
+	public String getHTMLContent() { return this.htmlContent; }
+	public Vector<String> getparentLinks() { return this.parentLinks; }
+	public Vector<String> getchildLinks() { return this.childLinks; }
+	
+	public void setParentLinks(Vector<String> parentLinks) { this.parentLinks = parentLinks; }
 }

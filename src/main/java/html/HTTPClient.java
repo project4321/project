@@ -5,8 +5,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
+import org.htmlparser.util.ParserException;
 
 
 public class HTTPClient {
@@ -28,13 +32,26 @@ public class HTTPClient {
 	    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
 
 	    long date = httpCon.getLastModified();
-	    if (date == 0) return null; // No last-modified information
+	    if (date == 0) return new Timestamp((new Date()).getTime()); // No last-modified information -> assume current
 	    else return new Timestamp(date);
 	}
 
-	public static String getTitle(String url) {
+	public static String getTitle(String htmlContent) throws ParserException {
+
+		htmlContent = htmlContent.replaceAll("\\s+", " ");
+	    Pattern p = Pattern.compile("<title>(.*?)</title>");
+	    Matcher m = p.matcher(htmlContent);
+	    
+	    if (m.find() == true) { return m.group(1).trim(); }
+	    else { return ""; }
 		
-		return "no title yet";
+//		Parser parser = new Parser(url);
+//		NodeList nodeList = parser.parse(new NodeFilter() {
+//			public boolean accept(Node node) {
+//				return node.getText().equalsIgnoreCase("title");
+//			}
+//		});
+//		System.out.println(nodeList.elementAt(0).getText());
 	}
 	
 }

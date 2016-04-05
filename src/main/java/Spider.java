@@ -21,11 +21,16 @@ import data.JDBMSpiderDAO;
 
 public class Spider {
 	
-	String url;
-	SpiderDAO dao = new JDBMSpiderDAO();
+	private final int maxCount = 20;
+	private String url;
+	private SpiderDAO dao;
 	
-	public Spider(String rootURL) throws IOException, ParserException{
+	public Spider(String rootURL) throws IOException{
 		url = rootURL;
+		dao = new JDBMSpiderDAO(url);
+	}
+	
+	public void crawl() throws IOException, ParserException {
 		
 		int count = 0;
 		Queue<String> queue = new LinkedBlockingQueue<String>(); // Queue for BFS
@@ -36,13 +41,13 @@ public class Spider {
 		queue.add(url);
 		processingSet.add(url);
 		
-		while (queue.size() > 0 && count < 20){
+		while (queue.size() > 0 && count < maxCount){
 			String url = queue.poll();
 			
 			Vector<String> children = (new LinkExtractor(url)).extractLinks();
 			String htmlContent = HTTPClient.getHTMLContent(url);
 			Timestamp lastMod = HTTPClient.getLastMod(url);
-			String title = HTTPClient.getTitle(url);
+			String title = HTTPClient.getTitle(htmlContent);
 			
 			Page n = new Page(url, title, new Vector<String>(), children, lastMod, htmlContent);
 			dao.add(n);
@@ -63,20 +68,16 @@ public class Spider {
 			count ++;
 		}
 		
-		System.out.println("objects in db :");
-		System.out.println(dao.toString());
+		for (Page page : dao.getAllPages()){
+			if (parents.containsKey(page.getURL()))
+				page.setParentLinks(parents.get(page.getURL()));
+			dao.update(page);
+		}
+		
+		System.out.println("\nobjects in db :");
+		System.out.println(dao.getAllPages());
+		System.out.println("(id:1): " + dao.getPage(1));
 		
 		dao.close();
-		
-//		// for loop get all from db then put parents link
-//		for (String key : parents.keySet()){
-//			System.out.println("\"" + key + "\": [");
-//			for (int i=0; i<parents.get(key).size(); i++){
-//				System.out.print("\t\"" + parents.get(key).get(i) + "\"");
-//				if (i < parents.get(key).size()-1) System.out.println(",");
-//			}
-//			System.out.println("\n]");
-//			
-//		}
 	}
 }

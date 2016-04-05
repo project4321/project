@@ -2,6 +2,7 @@ package data;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Vector;
 
 import model.Page;
 import jdbm.RecordManager;
@@ -14,7 +15,7 @@ public class JDBMSpiderDAO extends SpiderDAO {
 	private RecordManager recman;
     private HTree hashtable;
 	
-	public JDBMSpiderDAO() throws IOException{
+	public JDBMSpiderDAO(String rootURL) throws IOException{
 		// create or open spider record manager
         recman = RecordManagerFactory.createRecordManager("spider", new Properties());
 
@@ -32,35 +33,52 @@ public class JDBMSpiderDAO extends SpiderDAO {
         }
 	}
 	
+	@Override
+	public Vector<Page> getAllPages() throws IOException {
+		Vector<Page> pages = new Vector<Page>();
+		
+		FastIterator iter = hashtable.keys();
+		Integer id;
+		while ( (id = (Integer) iter.next()) != null ) {
+			pages.add((Page) hashtable.get(id));
+		}
+
+		return pages;
+	}
+
+	@Override
+	public Page getPage(int id) throws IOException {
+		return (Page) hashtable.get(id);
+	}
+	
+	@Override
 	public void add(Page n) throws IOException {
-//		System.out.println(n);
-		hashtable.put("key", "hello");
+		hashtable.put(n.getId(), n);
 		recman.commit();
 	}
 	
-	public void update(Page n){
-		
+	@Override
+	public void update(Page n) throws IOException{
+		hashtable.put(n.getId(), n);
+		recman.commit();
 	}
 	
+	@Override
 	public void close() throws IOException{
 		recman.close();
 	}
 	
 	@Override
 	public String toString() {
-		
 		String result = null;
 		
 		try {
-			result = new String("***");
+			result = "";
 			FastIterator iter = hashtable.keys();
 			String url;
-			result.concat("$$$");
 			while ( (url = (String) iter.next()) != null ) {
-				result.concat(hashtable.get(url).toString() + "\n");
-				result.concat("@@@");
+				result = result + hashtable.get(url) + "\n";
 			}
-			result.concat("###");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
