@@ -18,7 +18,7 @@ import org.htmlparser.util.ParserException;
 import data.SpiderDAO;
 import data.JDBMSpiderDAO;
 
-
+// no meaning
 public class Spider {
 	
 	private final int maxCount = 20;
