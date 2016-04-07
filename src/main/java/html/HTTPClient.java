@@ -36,7 +36,7 @@ public class HTTPClient {
 	    else return new Timestamp(date);
 	}
 
-	public static String getTitle(String htmlContent) throws ParserException {
+	public static String getTitle(String htmlContent) {
 
 		htmlContent = htmlContent.replaceAll("\\s+", " ");
 	    Pattern p = Pattern.compile("<title>(.*?)</title>");
@@ -44,14 +44,6 @@ public class HTTPClient {
 	    
 	    if (m.find() == true) { return m.group(1).trim(); }
 	    else { return ""; }
-		
-//		Parser parser = new Parser(url);
-//		NodeList nodeList = parser.parse(new NodeFilter() {
-//			public boolean accept(Node node) {
-//				return node.getText().equalsIgnoreCase("title");
-//			}
-//		});
-//		System.out.println(nodeList.elementAt(0).getText());
 	}
 	
 }

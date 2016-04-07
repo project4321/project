@@ -18,16 +18,18 @@ import org.htmlparser.util.ParserException;
 import data.SpiderDAO;
 import data.JDBMSpiderDAO;
 
-// no meaning
 public class Spider {
 	
 	private final int maxCount = 20;
 	private String url;
 	private SpiderDAO dao;
+	private Vector<Page> newPages, deletedPages;
 	
 	public Spider(String rootURL) throws IOException{
 		url = rootURL;
-		dao = new JDBMSpiderDAO(url);
+		dao = new JDBMSpiderDAO();
+		newPages = new Vector<Page>();
+		deletedPages = new Vector<Page>();
 	}
 	
 	public void crawl() throws IOException, ParserException {
@@ -56,6 +58,7 @@ public class Spider {
 					|| dao.getPageById(dao.getPageId(url)).getLastMod().before(lastMod)) {
 				
 				dao.add(page); // only insert db if the page is new to db
+				newPages.add(page);
 				System.out.print("new page: " + page.getURL());
 			}
 			System.out.println();
@@ -99,4 +102,7 @@ public class Spider {
 		
 		dao.close();
 	}
+	
+	public Vector<Page> getNewPages() { return this.newPages; }
+	public Vector<Page> getDeletedPages() { return this.deletedPages; }
 }

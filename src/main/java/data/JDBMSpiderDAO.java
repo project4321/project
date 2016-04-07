@@ -17,7 +17,7 @@ public class JDBMSpiderDAO extends SpiderDAO {
 	private RecordManager recman;
     private HTree graphHashTable, invertedHashTable;
 	
-	public JDBMSpiderDAO(String rootURL) throws IOException{
+	public JDBMSpiderDAO() throws IOException{
 		// create or open spider record manager
         recman = RecordManagerFactory.createRecordManager("spider", new Properties());
 
