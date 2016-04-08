@@ -2,15 +2,17 @@ package html;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
-import org.htmlparser.util.ParserException;
 
 
 public class HTTPClient {
@@ -32,10 +34,19 @@ public class HTTPClient {
 	    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
 
 	    long date = httpCon.getLastModified();
-	    if (date == 0) return new Timestamp((new Date()).getTime()); // No last-modified information -> assume current
+	    if (date == 0) return new Timestamp(httpCon.getDate()); 
 	    else return new Timestamp(date);
 	}
 
+	public static int getSize(String urlstring) throws IOException {
+		URL url = new URL(urlstring);
+		
+		HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+		if (httpCon.getHeaderField("size") == null) return HTTPClient.getHTMLContent(urlstring).length();
+		else return Integer.parseInt(httpCon.getHeaderField("size"));
+	}
+	
+	
 	public static String getTitle(String htmlContent) {
 
 		htmlContent = htmlContent.replaceAll("\\s+", " ");

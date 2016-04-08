@@ -48,11 +48,12 @@ public class Spider {
 			
 			
 			Timestamp lastMod = HTTPClient.getLastMod(url);
+			int size = HTTPClient.getSize(url);
 			Vector<String> children = (new LinkExtractor(url)).extractLinks();
 			String htmlContent = HTTPClient.getHTMLContent(url);
 			String title = HTTPClient.getTitle(htmlContent);
 			
-			Page page = new Page(url, title, new Vector<String>(), children, lastMod, htmlContent);
+			Page page = new Page(url, title, new Vector<String>(), children, lastMod, htmlContent, size);
 			System.out.print("id: " + dao.getPageId(url) + "; ");// + " lastMod: " + dao.getPageById(dao.getPageId(url)).getLastMod());
 			if (dao.getPageId(url) == null    // not exists in db && new lastMod 
 					|| dao.getPageById(dao.getPageId(url)).getLastMod().before(lastMod)) {

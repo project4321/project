@@ -24,7 +24,7 @@ public class EntryPoint {
 //		list.add(page2);
 		
 //		indexer.indexPage(list);
-		indexer.printAll();
+//		indexer.printAll();
 		indexer.close();
 	}
 }

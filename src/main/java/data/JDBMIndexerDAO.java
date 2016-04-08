@@ -31,7 +31,7 @@ public class JDBMIndexerDAO{
 		
 		public JDBMIndexerDAO() throws IOException{
 			// create or open spider record manager
-	        recman = RecordManagerFactory.createRecordManager("indexer", new Properties());
+	        recman = RecordManagerFactory.createRecordManager("spider", new Properties());
 
 	        // create or load wordId
 	        long recid = recman.getNamedObject("wordId"); // word -> wordID

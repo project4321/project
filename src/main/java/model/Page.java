@@ -10,7 +10,7 @@ public class Page implements Serializable {
 
 	private static int idcount = 1;
 	
-	private int id;
+	private int id, size;
 	private String url, title;
 	private Vector<String> parentLinks, childLinks;
 	private Timestamp lastMod;
@@ -26,7 +26,7 @@ public class Page implements Serializable {
 		this.htmlContent = "";
 	}
 	
-	public Page(String url, String title, Vector<String> parentLinks, Vector<String> childLinks, Timestamp lastMod, String htmlContent){
+	public Page(String url, String title, Vector<String> parentLinks, Vector<String> childLinks, Timestamp lastMod, String htmlContent, int size){
 		id = idcount++;
 		this.url = url;
 		this.title = title;
@@ -34,6 +34,7 @@ public class Page implements Serializable {
 		this.childLinks = childLinks;
 		this.lastMod = lastMod;
 		this.htmlContent = htmlContent;
+		this.size = size;
 	}
 	
 	@Override
@@ -56,6 +57,7 @@ public class Page implements Serializable {
 	public Vector<String> getchildLinks() { return this.childLinks; }
 	public Timestamp getLastMod() { return this.lastMod; }
 	public String getTitle() { return this.title; }
+	public int getSize() { return this.size; }
 	
 	public void setParentLinks(Vector<String> parentLinks) { this.parentLinks = parentLinks; }
 	public void setLastMod(Timestamp ts) { this.lastMod = ts; }
