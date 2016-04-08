@@ -16,7 +16,7 @@
   4. Gradle (STS) > Refresh All
   
 # add jar
-> (jdbm are not on maven repo)
+> jdbm are not on maven repo
 
   1. Open project properties
   2. Java Build Path > Libraries > Add JARs...

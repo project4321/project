@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Vector;
 
 import org.jsoup.Jsoup;
@@ -9,20 +8,15 @@ import org.jsoup.Jsoup;
 import jdbm.helper.IterationException;
 import model.Page;
 import data.JDBMIndexerDAO;
-import data.JDBMSpiderDAO;
-import data.SpiderDAO;
 
 public class Indexer {
 	private StopStem stopStem;
 	private JDBMIndexerDAO idao;
-	private SpiderDAO sdao;
 	
 	public Indexer() throws IOException{
 		stopStem = new StopStem();
 		idao = new JDBMIndexerDAO();
-		sdao = new JDBMSpiderDAO();
 		
-		//indexPage();
 	}
 	
 	public void indexPage(Vector<Page> page) throws IOException{
@@ -54,16 +48,16 @@ public class Indexer {
 					t_positions.get(t_s).add(i);
 				}
 			}
-			System.out.println("t_positions: " + t_positions);
+			// System.out.println("t_positions: " + t_positions);
 			
 			//for content
-//			System.out.println("raw html: " + p.getHTMLContent() + "\n");
+//			// System.out.println("raw html: " + p.getHTMLContent() + "\n");
 			String html = Jsoup.parse(p.getHTMLContent()).text();
 //			System.out .println("processed html: " + html + "\n");
 			
 			Vector<String> c_wordList = new Vector<String>();
 			c_wordList.addAll(Arrays.asList(html.split("\\s+")));
-//			System.out.println("word list: " + c_wordList.toString());
+//			// System.out.println("word list: " + c_wordList.toString());
 			
 			for(int i=0; i<c_wordList.size(); i++){
 				String c_s = stopStem.removeStopwords(c_wordList.get(i));
@@ -80,7 +74,7 @@ public class Indexer {
 					c_positions.get(c_s).add(i);
 				}
 			}
-			System.out.println("c_positions: " + c_positions);
+			// System.out.println("c_positions: " + c_positions);
 			
 			idao.addIndex(p.getId(), keywords, t_positions, c_positions);
 		}

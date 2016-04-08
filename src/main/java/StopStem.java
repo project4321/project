@@ -16,7 +16,7 @@ public class StopStem {
 	
 
 	public boolean isStopWord(String str) {
-		if(stopWords.contains(str)) System.out.println(str+" is Stop word");
+//		if(stopWords.contains(str))  System.out.println(str+" is Stop word");
 		return stopWords.contains(str);
 	}
 
@@ -31,7 +31,7 @@ public class StopStem {
 			s = new Scanner(new BufferedReader(new FileReader("stopwords.txt")));
 
 			while (s.hasNext()) {
-				//System.out.println(s.next());
+				//// System.out.println(s.next());
 				stopWords.add(s.next());
 			}
 		} catch (FileNotFoundException e) {
@@ -64,9 +64,9 @@ public class StopStem {
 				input = in.readLine();
 				if (input.length() > 0) {
 					if (stopStem.isStopWord(input))
-						System.out.println("It should be stopped");
+						// System.out.println("It should be stopped");
 					else
-						System.out.println("The stem of it is \""
+						// System.out.println("The stem of it is \""
 								+ stopStem.stem(input) + "\"");
 				}
 			} while (input.length() > 0);

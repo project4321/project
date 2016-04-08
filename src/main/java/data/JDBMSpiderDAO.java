@@ -24,29 +24,29 @@ public class JDBMSpiderDAO extends SpiderDAO {
         // create or load graph
         long recid = recman.getNamedObject("graph"); // pageId -> page
         if (recid != 0) {
-            System.out.println("Reloading existing graph...");
+            // System.out.println("Reloading existing graph...");
             graphHashTable = HTree.load(recman, recid);
         } 
         else {
-            System.out.println("Creating new graph...");
+            // System.out.println("Creating new graph...");
             graphHashTable = HTree.createInstance(recman);
             recman.setNamedObject("graph", graphHashTable.getRecid());
         }
         
         recid = recman.getNamedObject("invert"); // pageUrl -> pageId
         if (recid != 0) {
-            System.out.println("Reloading existing invert...");
+            // System.out.println("Reloading existing invert...");
             invertedHashTable = HTree.load(recman, recid);
         } 
         else {
-            System.out.println("Creating new invert...");
+            // System.out.println("Creating new invert...");
             invertedHashTable = HTree.createInstance(recman);
             recman.setNamedObject("invert", invertedHashTable.getRecid());
         }
-        System.out.println("All objects in graph :");
-        System.out.println(this.getAllPages());
-        System.out.println("Invert : ");
-        System.out.println(this.getInvert());
+        // System.out.println("All objects in graph :");
+        // System.out.println(this.getAllPages());
+        // System.out.println("Invert : ");
+        // System.out.println(this.getInvert());
 	}
 	
 	@Override

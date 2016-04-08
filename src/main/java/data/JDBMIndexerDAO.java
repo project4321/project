@@ -2,12 +2,9 @@ package data;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
-import model.Page;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
 import jdbm.helper.FastIterator;
@@ -36,11 +33,11 @@ public class JDBMIndexerDAO{
 	        // create or load wordId
 	        long recid = recman.getNamedObject("wordId"); // word -> wordID
 	        if (recid != 0) {
-	            System.out.println("Reloading existing wordId...");
+	            // System.out.println("Reloading existing wordId...");
 	            wordIdHashTable = HTree.load(recman, recid);
 	        } 
 	        else {
-	            System.out.println("Creating new wordId...");
+	            // System.out.println("Creating new wordId...");
 	            wordIdHashTable = HTree.createInstance(recman);
 	            recman.setNamedObject("wordId", wordIdHashTable.getRecid());
 	        }
@@ -48,11 +45,11 @@ public class JDBMIndexerDAO{
 	     // create or load invertedContent
 	        recid = recman.getNamedObject("invertedContent"); // word -> {pageId, <wordPositions>} for body
 	        if (recid != 0) {
-	            System.out.println("Reloading existing invertedContent...");
+	            // System.out.println("Reloading existing invertedContent...");
 	            invertedContentHashTable = HTree.load(recman, recid);
 	        } 
 	        else {
-	            System.out.println("Creating new invertedContent...");
+	            // System.out.println("Creating new invertedContent...");
 	            invertedContentHashTable = HTree.createInstance(recman);
 	            recman.setNamedObject("invertedContent", invertedContentHashTable.getRecid());
 	        }
@@ -60,11 +57,11 @@ public class JDBMIndexerDAO{
 		// create or load invertedTitle
 	        recid = recman.getNamedObject("invertedTitle"); // word -> {pageId, <wordPositions>} for title
 	        if (recid != 0) {
-	            System.out.println("Reloading existing invertedTitle...");
+	            // System.out.println("Reloading existing invertedTitle...");
 	            invertedTitleHashTable = HTree.load(recman, recid);
 	        } 
 	        else {
-	            System.out.println("Creating new invertedTitle...");
+	            // System.out.println("Creating new invertedTitle...");
 	            invertedTitleHashTable = HTree.createInstance(recman);
 	            recman.setNamedObject("invertedTitle", invertedTitleHashTable.getRecid());
 	        }
@@ -72,11 +69,11 @@ public class JDBMIndexerDAO{
 	     // create or load pageWord
 	        recid = recman.getNamedObject("pageWord"); // pageId -> <keywords>
 	        if (recid != 0) {
-	            System.out.println("Reloading existing pageWord...");
+	            // System.out.println("Reloading existing pageWord...");
 	            pageWordHashTable = HTree.load(recman, recid);
 	        } 
 	        else {
-	            System.out.println("Creating new pageWord...");
+	            // System.out.println("Creating new pageWord...");
 	            pageWordHashTable = HTree.createInstance(recman);
 	            recman.setNamedObject("pageWord", pageWordHashTable.getRecid());
 	        }
@@ -94,11 +91,11 @@ public class JDBMIndexerDAO{
 		}
 		
 		public void addWord(String s) throws IOException{
-			System.out.println("addWord:"+ s);
+			// System.out.println("addWord:"+ s);
 			int n=wordNum+1;
 			wordIdHashTable.put(s,n);  		//wordId starts from 1
 			wordNum+=1;
-			System.out.println(s+" -> "+wordIdHashTable.get(s));
+			// System.out.println(s+" -> "+wordIdHashTable.get(s));
 			
 			recman.commit();
 		}
@@ -115,7 +112,7 @@ public class JDBMIndexerDAO{
 				
 				posting.put(pageId, t_positions.get(s));
 				invertedTitleHashTable.put(s, posting);
-				System.out.println("invertedTitleHashTable.get(" + s + "): " + invertedTitleHashTable.get(s));
+				// System.out.println("invertedTitleHashTable.get(" + s + "): " + invertedTitleHashTable.get(s));
 			}
 			
 			for(String s:c_positions.keySet())
@@ -127,7 +124,7 @@ public class JDBMIndexerDAO{
 					posting = (HashMap<Integer, Vector<Integer>>) invertedContentHashTable.get(s);
 				posting.put(pageId, c_positions.get(s));
 				invertedContentHashTable.put(s, posting);
-				System.out.println("invertedContentHashTable.get(" + s + "): " + invertedContentHashTable.get(s));
+				// System.out.println("invertedContentHashTable.get(" + s + "): " + invertedContentHashTable.get(s));
 			}	
 			recman.commit();
 			
@@ -190,27 +187,27 @@ public class JDBMIndexerDAO{
 		}
 		
 		public void printAll() throws IterationException, IOException{
-			System.out.println("word->wordId:");
+			// System.out.println("word->wordId:");
 			int n=0;
 			/*for(int i=0; i<10; i++){
 				FastIterator word = wordIdHashTable.keys();
 				
 				while(word.next()!= null && n<10){
-					System.out.println((String) word.next()+" -> "+wordIdHashTable.get(word.next()));
+					// System.out.println((String) word.next()+" -> "+wordIdHashTable.get(word.next()));
 					n++;
 					
 				}
 
 				
 			}
-			System.out.println("pageWord:     "+pageWordHashTable.keys());*/
+			// System.out.println("pageWord:     "+pageWordHashTable.keys());*/
 			
 			//pageWordHashTable.keys()
-			System.out.println("Printing....");
+			// System.out.println("Printing....");
 			Vector<String> list = (Vector<String>) pageWordHashTable.get(1);
 			for(String s: list)
 			{
-				System.out.println(s);
+				// System.out.println(s);
 			}
 			
 			}
@@ -223,11 +220,11 @@ public class JDBMIndexerDAO{
 		
 
 		public void hello() throws IterationException, IOException {
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+			// System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 			String word;
 			FastIterator it = wordIdHashTable.keys();
 			while ( (word = (String) it.next()) != null) {
-				System.out.println((String) word + " -> " + wordIdHashTable.get(word));				
+				// System.out.println((String) word + " -> " + wordIdHashTable.get(word));				
 			}
 		}
 		
