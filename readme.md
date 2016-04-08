@@ -16,11 +16,11 @@
   4. Gradle (STS) > Refresh All
   
 # add jar
-> jdbm are not on maven repo
+> if you don't want to use gradle
 
   1. Open project properties
   2. Java Build Path > Libraries > Add JARs...
-  3. Select COMP4321/lib/jdbm-1.0.jar
+  3. Select COMP4321/lib/<name>.jar
   
 # run program
   1. Open EntryPoint.java
