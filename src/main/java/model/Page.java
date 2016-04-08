@@ -55,6 +55,7 @@ public class Page implements Serializable {
 	public Vector<String> getparentLinks() { return this.parentLinks; }
 	public Vector<String> getchildLinks() { return this.childLinks; }
 	public Timestamp getLastMod() { return this.lastMod; }
+	public String getTitle() { return this.title; }
 	
 	public void setParentLinks(Vector<String> parentLinks) { this.parentLinks = parentLinks; }
 	public void setLastMod(Timestamp ts) { this.lastMod = ts; }
