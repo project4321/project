@@ -1,9 +1,14 @@
 package data;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Vector;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
@@ -185,6 +190,29 @@ public class JDBMIndexerDAO{
 		public void deletePageWord(int pageId) throws IOException{
 			pageWordHashTable.remove(pageId);
 		}
+		
+		public Vector<Pair<String, Integer>> getWordFrequencyByPageId(int pageId) throws IOException{
+	    	
+			Vector<Pair<String, Integer>> frequency = new Vector<Pair<String, Integer>>();
+	    	
+			Vector<String> words = this.getWordsByPageId(pageId);
+	    	for (String word : words){
+	    		HashMap<Integer, Vector<Integer>> contentPosting = this.getContentPostingByWord(word);
+	    		Vector<Integer> wordPosition = contentPosting.get(pageId);
+	    		Pair<String, Integer> pair = new ImmutablePair<String, Integer>(word, wordPosition.size());
+	    		frequency.add(pair);
+	    	}
+	    	
+	    	Collections.sort(frequency, new Comparator<Pair<String, Integer>>() {
+				public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+					if (o1.getRight() == o2.getRight())		return 0;
+					else if (o1.getRight() > o2.getRight())	return -1;
+					else 									return 1;
+				}
+			});
+	    	
+	    	return frequency;
+	    }
 		
 		public void printAll() throws IterationException, IOException{
 			// System.out.println("word->wordId:");
