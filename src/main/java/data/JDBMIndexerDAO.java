@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.Vector;
 
+import model.Page;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -213,6 +215,19 @@ public class JDBMIndexerDAO{
 	    	
 	    	return frequency;
 	    }
+		
+		public Vector<String> getAllWords() throws IOException{
+			
+			Vector<String> words = new Vector<String>();
+			
+			FastIterator it = invertedContentHashTable.keys();
+			String word;
+			while ( (word = (String) it.next()) != null ) {
+				words.add(word);
+			}
+			
+			return words;
+		}
 		
 		public void printAll() throws IterationException, IOException{
 			// System.out.println("word->wordId:");

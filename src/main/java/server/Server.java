@@ -34,10 +34,10 @@ public class Server {
     
     @RequestMapping("/search")
     @ResponseBody
-    public Vector<Map<String, Object>> search(@RequestParam(required=true) String q) throws IOException{
+    public Vector<Map<String, Object>> search(@RequestParam(required=true) String[] qs) throws IOException{
     	
-    	String[] query = q.split(" ");
-
+    	for (String q : qs ){ System.out.println(q); }
+    	
     	int[] ids = {1, 2, 3}; // get from retrieval function
     	
     	Vector<Map<String, Object>> results = new Vector<Map<String,Object>>();
@@ -59,6 +59,15 @@ public class Server {
     	}
     	
     	return results;
+    }
+    
+    @RequestMapping("/words")
+    @ResponseBody
+    public Vector<String> getAllWords() throws IOException{
+    	
+    	Vector<String> words = (new JDBMIndexerDAO()).getAllWords();
+    	Collections.sort(words);
+    	return words;
     }
     
     private Vector<String> getMostSimilar(int pageId) throws IOException{
