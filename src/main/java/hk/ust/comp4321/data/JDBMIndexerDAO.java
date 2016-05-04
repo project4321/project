@@ -1,4 +1,4 @@
-package data;
+package hk.ust.comp4321.data;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Vector;
-
-import model.Page;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -139,7 +137,8 @@ public class JDBMIndexerDAO{
 		}
 		
 		public Vector<String> getWordsByPageId(int id) throws IOException{
-			return (Vector<String>) pageWordHashTable.get(id);
+			if (pageWordHashTable.get(id) == null) return new Vector<String>();
+			else return (Vector<String>) pageWordHashTable.get(id);
 		}
 		
 		public HashMap<Integer, Vector<Integer>> getTitlePostingByWord(String word) throws IOException{

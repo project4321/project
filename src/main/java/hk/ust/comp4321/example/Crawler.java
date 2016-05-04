@@ -1,4 +1,4 @@
-package example;
+package hk.ust.comp4321.example;
 /* --
 COMP4321 Lab2 Exercise
 Student Name:

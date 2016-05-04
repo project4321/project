@@ -1,5 +1,5 @@
 // HTMLParser Library $Name: v1_6 $ - A java-based parser for HTML
-package example;
+package hk.ust.comp4321.example;
 
 import java.net.URL;
 import java.util.Vector;

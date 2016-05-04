@@ -1,3 +1,7 @@
+package hk.ust.comp4321.tools;
+import hk.ust.comp4321.data.JDBMIndexerDAO;
+import hk.ust.comp4321.model.Page;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,8 +10,6 @@ import java.util.Vector;
 import org.jsoup.Jsoup;
 
 import jdbm.helper.IterationException;
-import model.Page;
-import data.JDBMIndexerDAO;
 
 public class Indexer {
 	private StopStem stopStem;

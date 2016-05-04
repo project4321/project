@@ -1,4 +1,6 @@
-package data;
+package hk.ust.comp4321.data;
+
+import hk.ust.comp4321.model.Page;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,7 +8,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
-import model.Page;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
 import jdbm.helper.FastIterator;

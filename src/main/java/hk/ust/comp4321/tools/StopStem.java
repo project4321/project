@@ -1,4 +1,5 @@
-import IRUtilities.*;
+package hk.ust.comp4321.tools;
+import hk.ust.comp4321.IRUtilities.*;
 
 import java.io.*;
 import java.util.Scanner;

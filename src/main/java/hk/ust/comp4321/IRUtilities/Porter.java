@@ -8,7 +8,7 @@
 
 */ 
 
-package IRUtilities;
+package hk.ust.comp4321.IRUtilities;
 
 import java.io.*;
 

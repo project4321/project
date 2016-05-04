@@ -1,5 +1,9 @@
-import html.HTTPClient;
-import html.LinkExtractor;
+package hk.ust.comp4321.tools;
+import hk.ust.comp4321.data.JDBMSpiderDAO;
+import hk.ust.comp4321.data.SpiderDAO;
+import hk.ust.comp4321.html.HTTPClient;
+import hk.ust.comp4321.html.LinkExtractor;
+import hk.ust.comp4321.model.Page;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -11,12 +15,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import model.Page;
-
 import org.htmlparser.util.ParserException;
-
-import data.SpiderDAO;
-import data.JDBMSpiderDAO;
 
 public class Spider {
 	

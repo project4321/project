@@ -1,4 +1,4 @@
-package html;
+package hk.ust.comp4321.html;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;

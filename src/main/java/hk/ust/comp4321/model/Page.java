@@ -1,4 +1,4 @@
-package model;
+package hk.ust.comp4321.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Vector;

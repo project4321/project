@@ -1,26 +1,23 @@
-package server;
+package hk.ust.comp4321.server;
+
+import hk.ust.comp4321.data.JDBMIndexerDAO;
+import hk.ust.comp4321.data.JDBMSpiderDAO;
+import hk.ust.comp4321.demo.MyClass;
+import hk.ust.comp4321.model.Page;
+import hk.ust.comp4321.tools.Retrieval;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Vector;
 
-import model.Page;
-
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jsoup.Jsoup;
-import org.springframework.boot.*;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
-
-import data.JDBMIndexerDAO;
-import data.JDBMSpiderDAO;
 
 @Controller
 @EnableAutoConfiguration
@@ -38,21 +35,21 @@ public class Server {
     	
     	for (String q : qs ){ System.out.println(q); }
     	
-    	int[] ids = {1, 2, 3}; // get from retrieval function
+    	int[] ids = (new Retrieval("spider")).search(qs);
     	
     	Vector<Map<String, Object>> results = new Vector<Map<String,Object>>();
     	
     	for (int id : ids){
+    		
+    		System.out.print("id: " + id);
+    		
     		Page p = (new JDBMSpiderDAO()).getPageById(id);
     		
-    		String summary = Jsoup.parse(p.getHTMLContent()).text();
-    		summary = summary.substring(0, summary.indexOf(" ", 200));
     		Vector<String> words = getMostSimilar(id);
     		
     		Map<String, Object> map = new HashMap<String, Object>();
-    		map.put("title", p.getTitle());
-    		map.put("url", p.getURL());
-    		map.put("caption", summary);
+    		map.put("page", p);
+    		map.put("score", 0);
     		map.put("keywords", words);
     		
     		results.add(map);
@@ -61,13 +58,20 @@ public class Server {
     	return results;
     }
     
+    @RequestMapping("/pages")
+    @ResponseBody
+    public Vector<Page> getPages() throws IOException{
+    	return (new JDBMSpiderDAO()).getAllPages();
+    }
+    
     @RequestMapping("/words")
     @ResponseBody
-    public Vector<String> getAllWords() throws IOException{
+    public String[] getAllWords() throws IOException{
     	
     	Vector<String> words = (new JDBMIndexerDAO()).getAllWords();
     	Collections.sort(words);
-    	return words;
+
+    	return words.toArray(new String[words.size()]);
     }
     
     private Vector<String> getMostSimilar(int pageId) throws IOException{
@@ -84,5 +88,12 @@ public class Server {
     
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Server.class, args);
+//    	System.out.println((new MyClass()).testMethod());
+//    	
+//
+//    	String[] words = (new Server()).getAllWords();
+//    	for (String word : words){
+////    		System.out.println(word);
+//    	}
     }
 }

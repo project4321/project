@@ -1,4 +1,4 @@
-package html;
+package hk.ust.comp4321.html;
 import java.net.URL;
 import java.util.Vector;
 

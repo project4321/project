@@ -1,4 +1,4 @@
-package example;
+package hk.ust.comp4321.example;
 
 
 import java.util.Properties;

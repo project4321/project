@@ -1,9 +1,9 @@
-package data;
+package hk.ust.comp4321.data;
+
+import hk.ust.comp4321.model.Page;
 
 import java.io.IOException;
 import java.util.Vector;
-
-import model.Page;
 
 public abstract class SpiderDAO {
 

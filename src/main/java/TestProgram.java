@@ -1,4 +1,6 @@
 
+import hk.ust.comp4321.model.Page;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,7 +10,6 @@ import java.util.Vector;
 import jdbm.RecordManager;
 import jdbm.RecordManagerFactory;
 import jdbm.htree.HTree;
-import model.Page;
 import jdbm.helper.FastIterator;
 
 public class TestProgram {

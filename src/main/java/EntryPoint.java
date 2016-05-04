@@ -1,3 +1,6 @@
+import hk.ust.comp4321.tools.Indexer;
+import hk.ust.comp4321.tools.Spider;
+
 import java.io.IOException;
 
 import org.htmlparser.util.ParserException;
@@ -9,7 +12,7 @@ public class EntryPoint {
 		
 		System.out.println("Crawling ...");
 		
-		Spider spider = new Spider("http://www.cse.ust.hk");
+		Spider spider = new Spider("http://www.cse.ust.hk/~ericzhao/COMP4321/TestPages/testpage.htm");
 		spider.crawl();
 		
 		System.out.println("Indexing ...");
